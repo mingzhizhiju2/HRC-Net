@@ -1,0 +1,10 @@
+torch>=2.1
+torchvision
+torchaudio
+numpy
+scipy
+pyyaml
+tqdm
+h5py
+scikit-learn
+einops
