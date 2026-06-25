@@ -1,11 +1,10 @@
 import argparse
-import shutil
 import urllib.request
+import shutil
 from pathlib import Path
 from zipfile import ZipFile
 
-
-MODELNET40_URL = "https://shapenet.cs.stanford.edu/media/modelnet40_ply_hdf5_2048.zip"
+SHAPENET_PART_URL = "https://shapenet.cs.stanford.edu/media/shapenet_part_seg_hdf5_data.zip"
 
 
 def download(url: str, target: Path) -> None:
@@ -21,16 +20,16 @@ def extract(archive_path: Path, output_dir: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Download ModelNet40 for HRC-Net.")
-    parser.add_argument("--root", type=Path, default=Path("datasets/modelnet40"))
+    parser = argparse.ArgumentParser(description="Download ShapeNet Part for HRC-Net.")
+    parser.add_argument("--root", type=Path, default=Path("datasets/shapenetpart"))
     args = parser.parse_args()
 
     args.root.mkdir(parents=True, exist_ok=True)
-    archive_path = args.root / "modelnet40_ply_hdf5_2048.zip"
-    download(MODELNET40_URL, archive_path)
+    archive_path = args.root / "shapenet_part_seg_hdf5_data.zip"
+    download(SHAPENET_PART_URL, archive_path)
     extract(archive_path, args.root)
 
-    extracted = args.root / "modelnet40_ply_hdf5_2048"
+    extracted = args.root / "hdf5_data"
     if extracted.exists():
         for item in extracted.iterdir():
             destination = args.root / item.name
@@ -38,7 +37,7 @@ def main() -> None:
                 continue
             shutil.move(str(item), str(destination))
 
-    print(f"ModelNet40 prepared at: {args.root.resolve()}")
+    print(f"ShapeNet Part prepared at: {args.root.resolve()}")
 
 
 if __name__ == "__main__":
