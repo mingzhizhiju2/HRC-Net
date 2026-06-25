@@ -1,10 +1,11 @@
-task: classification
-dataset: modelnet40
-data_root: ./datasets/modelnet40
-num_classes: 40
-num_points: 1024
-batch_size: 32
-epochs: 250
+task: part_segmentation
+dataset: shapenetpart
+data_root: ./datasets/shapenetpart
+num_classes: 50
+num_categories: 16
+num_points: 2048
+batch_size: 16
+epochs: 300
 num_workers: 4
 
 optimizer:
@@ -17,7 +18,7 @@ scheduler:
   min_lr: 1.0e-5
 
 model:
-  name: hrcnet_cls
+  name: hrcnet_partseg
   input_channels: 3
   stem_channels: 64
   attention_reduction: 4
@@ -26,14 +27,16 @@ model:
       k: 32
       out_channels: 128
       band_edges: [0.25, 0.5, 0.75, 1.0]
-    - sample_count: 256
+    - sample_count: 128
       k: 16
       out_channels: 256
       band_edges: [0.25, 0.5, 0.75, 1.0]
-    - sample_count: 128
+    - sample_count: 32
       k: 8
       out_channels: 512
       band_edges: [0.25, 0.5, 0.75, 1.0]
-  classifier:
-    hidden_channels: [256, 128]
-    dropout: 0.5
+  decoder:
+    channels: [256, 128, 128]
+  segmentation_head:
+    hidden_channels: 128
+    dropout: 0.3

@@ -1,7 +1,7 @@
 task: classification
-dataset: modelnet40
-data_root: ./datasets/modelnet40
-num_classes: 40
+dataset: scanobjectnn
+data_root: ./datasets/scanobjectnn
+num_classes: 15
 num_points: 1024
 batch_size: 32
 epochs: 250
